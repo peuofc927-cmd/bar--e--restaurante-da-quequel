@@ -1,13 +1,46 @@
 import { useEffect, useRef } from "react";
 import { SiInstagram } from "react-icons/si";
 import { MapPin, Star, Tv } from "lucide-react";
-import heroPhoto from "@assets/IMG_9346_1782673098651.jpeg";
-import chefSelfie from "@assets/IMG_9349_1782673098649.jpeg";
-import foodTable from "@assets/IMG_9350_1782673098651.jpeg";
-import panelaBairro from "@assets/IMG_9347_1782673098651.jpeg";
-import drinks from "@assets/IMG_9348_1782673098651.jpeg";
 
 const INSTAGRAM_URL = "https://www.instagram.com/cozinheiraquequel";
+
+const visualStyles = {
+  hero:
+    "radial-gradient(circle at 50% 16%, rgba(245, 181, 82, 0.28), transparent 24rem), linear-gradient(140deg, rgba(80, 39, 18, 0.8), rgba(15, 11, 8, 0.9)), linear-gradient(90deg, hsl(28 58% 38%), hsl(122 36% 28%))",
+  table:
+    "radial-gradient(circle at 30% 30%, hsl(43 88% 62%), transparent 9rem), radial-gradient(circle at 70% 64%, hsl(118 35% 31%), transparent 10rem), linear-gradient(135deg, hsl(25 69% 43%), hsl(20 31% 18%))",
+  drinks:
+    "radial-gradient(circle at 62% 22%, hsl(42 89% 66%), transparent 7rem), radial-gradient(circle at 32% 74%, hsl(12 72% 45%), transparent 7rem), linear-gradient(145deg, hsl(119 35% 26%), hsl(25 43% 20%))",
+  chef:
+    "radial-gradient(circle at 50% 24%, hsl(42 84% 65%), transparent 8rem), linear-gradient(160deg, hsl(24 67% 44%), hsl(20 24% 17%))",
+  award:
+    "radial-gradient(circle at 50% 40%, hsl(42 92% 62%), transparent 9rem), linear-gradient(135deg, hsl(120 36% 31%), hsl(25 64% 35%))",
+};
+
+function VisualPanel({
+  className = "",
+  label,
+  styleName,
+  testId,
+}: {
+  className?: string;
+  label: string;
+  styleName: keyof typeof visualStyles;
+  testId: string;
+}) {
+  return (
+    <div
+      aria-label={label}
+      className={`relative overflow-hidden ${className}`}
+      data-testid={testId}
+      role="img"
+      style={{ background: visualStyles[styleName] }}
+    >
+      <div className="absolute inset-0 opacity-30 bg-[linear-gradient(90deg,transparent_0_18%,rgba(255,255,255,.2)_18%_19%,transparent_19%_38%,rgba(255,255,255,.14)_38%_39%,transparent_39%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" />
+    </div>
+  );
+}
 
 export default function Home() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -40,11 +73,11 @@ export default function Home() {
       >
         {/* Background image with overlay */}
         <div className="absolute inset-0">
-          <img
-            src={heroPhoto}
-            alt="Restaurante Quequel"
-            className="w-full h-full object-cover object-top opacity-30"
-            data-testid="img-hero"
+          <VisualPanel
+            label="Restaurante Quequel"
+            styleName="hero"
+            className="w-full h-full opacity-70"
+            testId="img-hero"
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)" }} />
         </div>
@@ -133,35 +166,35 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 fade-up opacity-0 translate-y-8 transition-all duration-700 delay-150">
-            <img
-              src={foodTable}
-              alt="Mesa farta do Restaurante Quequel"
+            <VisualPanel
+              label="Mesa farta do Restaurante Quequel"
+              styleName="table"
               className="w-full h-72 md:h-96 object-cover rounded-2xl shadow-lg"
-              data-testid="img-food-table"
+              testId="img-food-table"
             />
           </div>
           <div className="fade-up opacity-0 translate-y-8 transition-all duration-700 delay-200">
-            <img
-              src={drinks}
-              alt="Panela de barro e bebidas"
+            <VisualPanel
+              label="Panela de barro e bebidas"
+              styleName="drinks"
               className="w-full h-72 md:h-96 object-cover rounded-2xl shadow-lg"
-              data-testid="img-drinks"
+              testId="img-drinks"
             />
           </div>
           <div className="fade-up opacity-0 translate-y-8 transition-all duration-700 delay-250">
-            <img
-              src={chefSelfie}
-              alt="Chef Quequel com cliente"
+            <VisualPanel
+              label="Chef Quequel com cliente"
+              styleName="chef"
               className="w-full h-64 object-cover rounded-2xl shadow-lg"
-              data-testid="img-chef-selfie"
+              testId="img-chef-selfie"
             />
           </div>
           <div className="md:col-span-2 fade-up opacity-0 translate-y-8 transition-all duration-700 delay-300">
-            <img
-              src={panelaBairro}
-              alt="Prêmio Panela de Bairro"
+            <VisualPanel
+              label="Prêmio Panela de Bairro"
+              styleName="award"
               className="w-full h-64 object-cover object-center rounded-2xl shadow-lg"
-              data-testid="img-award"
+              testId="img-award"
             />
           </div>
         </div>
@@ -174,12 +207,11 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center">
           <div className="w-full md:w-2/5 fade-up opacity-0 translate-y-8 transition-all duration-700">
-            <img
-              src={chefSelfie}
-              alt="Chef Quequel"
-              className="w-full max-w-xs mx-auto rounded-3xl shadow-xl object-cover"
-              style={{ aspectRatio: "3/4" }}
-              data-testid="img-chef-portrait"
+            <VisualPanel
+              label="Chef Quequel"
+              styleName="chef"
+              className="w-full max-w-xs mx-auto rounded-3xl shadow-xl object-cover aspect-[3/4]"
+              testId="img-chef-portrait"
             />
           </div>
           <div className="flex-1 fade-up opacity-0 translate-y-8 transition-all duration-700 delay-100">
